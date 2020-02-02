@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         addDoneButtonOnKeyboard()
         
     }
-    
+    // Обновляем значение view
     func displayColors() {
         let red = CGFloat(redSlider.value)
         let blue = CGFloat(blueSlider.value)
@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         
     }
     
+    // Настраиваем внешний вид
     func externalSetup() {
         
         (redSlider.minimumValue,  greenSlider.minimumValue, blueSlider.minimumValue) = (0.0, 0.0, 0.0)
@@ -67,6 +68,7 @@ class ViewController: UIViewController {
         
     }
     
+    // Добавляем кнопку Done на клавиатуру
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
         doneToolbar.barStyle = .default
@@ -90,7 +92,7 @@ class ViewController: UIViewController {
         blueValueTF.resignFirstResponder()
         
     }
-    
+    // Обновляем значение лэйблов и филдов
     func updateValues() {
         redValueTF.text = String(format: "%.2f", redSlider.value)
         redValueLabel.text = redValueTF.text
@@ -102,21 +104,11 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func redSliderAction(_ sender: UISlider) {
-        updateValues()
-        displayColors()
-        
-    }
-    
-    @IBAction func greenSliderAction(_ sender: UISlider) {
+    @IBAction func rgbSlider(_ sendr: UISlider){
         updateValues()
         displayColors()
     }
     
-    @IBAction func blueSliderValue(_ sender: UISlider) {
-        updateValues()
-        displayColors()
-    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -127,6 +119,7 @@ class ViewController: UIViewController {
 
 extension ViewController: UITextFieldDelegate {
     
+    // Ограничиваем возможность ввода символов кроме цифр и точки
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let aSet = NSCharacterSet(charactersIn:"0123456789.").inverted
@@ -155,7 +148,11 @@ extension ViewController: UITextFieldDelegate {
                 updateValues()
             }else{
                 showAlert(with: "Неверное значение", and: "Введенное значение должно быть в пределах от 0.00 до 1.00")
+                updateValues()
             }
+        }else{
+            showAlert(with: "Отсутсвует значение", and: "Ведите значение от 0.00 до 1.00")
+            updateValues()
         }
     }
 }
